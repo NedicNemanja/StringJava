@@ -1,0 +1,227 @@
+/* Simple +/-/* expression language; parser evaluates constant expressions on the fly*/
+/**
+ *  Package and Import Specifications
+ */
+import java.lang.String;
+import java.util.*;
+import java_cup.runtime.*;
+
+/**
+ *  Usercode Components
+ */
+parser code {:
+    // Connect this parser to a scanner!
+    Scanner s;
+    Parser(Scanner s){ this.s=s; }
+:}
+
+/* define how to connect to the scanner! */
+scan with {: return s.next_token(); :};
+
+/**
+ *  Symbol Lists
+ */
+
+/* Terminals (tokens returned by the scanner). */
+terminal COMMA;
+terminal String IF, ELSE;
+terminal PREFIX,SUFFIX, CONCAT;
+terminal RBRACE, LPAREN, RPAREN, RPAREN_LBRACE;
+terminal String IDENTIFIER, STRING_LITERAL;
+
+/*  Non terminals */
+non terminal prog;
+non terminal LinkedList<String> function_declarations; //list of func_delcaration, may be empty
+non terminal String func_delcaration;
+non terminal LinkedList<String> parameter_list; //list of parameters,may be empty
+non terminal LinkedList<String> parameter_list2;//", parameter" parameter_list extension
+non terminal String parameter;            //parameter used in func_delcaration
+non terminal LinkedList<String> expr_list;  //list of expr, may be empty
+non terminal String expr, top_expr;
+non terminal String inner_expr; //inner_expr -> return expr
+non terminal String func_call,top_func_call;
+non terminal LinkedList<String> argument_list,top_argument_list;   //function call arguments
+non terminal LinkedList<String> argument_list2,top_argument_list2;  //", argument" argument_list extension
+non terminal String argument,top_argument;
+non terminal String concat_op,top_concat_op;
+non terminal String if_expr,top_if_expr;
+non terminal String condition,top_condition;
+
+
+/**
+ *  Precedence Declarations
+ */
+precedence nonassoc IF,ELSE,PREFIX,SUFFIX;
+precedence left CONCAT;
+precedence nonassoc LPAREN,RPAREN;
+precedence nonassoc RPAREN_LBRACE;
+
+/**
+ *  The Grammar Rules
+ */
+prog ::= function_declarations:funcde expr_list:exprlist
+{:System.out.println("public class Main {");
+  System.out.println("\tpublic static void main(String[] args) {");
+  /*print top expressions*/
+  ListIterator<String> iterator = exprlist.listIterator();
+  while(iterator.hasNext()) {
+    System.out.println("\t\tSystem.out.println("+iterator.next()+");");
+  };
+  System.out.println("\t}");
+  /*print function declarations*/
+  ListIterator<String> iterator2 = funcde.listIterator();
+  while(iterator2.hasNext()) {
+    System.out.println("\t"+iterator2.next());
+  };
+  System.out.println("}");
+:}
+;
+
+function_declarations ::= function_declarations:funcde func_delcaration:d
+{: funcde.add(d); RESULT=funcde; :}
+                      | /*empty*/
+{: RESULT=new LinkedList<String>(); :}
+;
+
+func_delcaration ::= IDENTIFIER:id LPAREN parameter_list:plist RPAREN_LBRACE inner_expr:e RBRACE
+{:
+  String buffer = "public static String "+id+"(";
+  //parameter list
+  ListIterator<String> iterator = plist.listIterator();
+  while(iterator.hasNext()){
+    if(iterator.hasPrevious())
+      buffer += ','+"String "+iterator.next();
+    else
+      buffer += "String "+iterator.next();
+  };
+  buffer += ") ";
+  //function body
+  buffer += "{\n\t\t"+e+";\n\t}";
+  RESULT = buffer;
+:}
+;
+
+parameter_list ::= /*empty*/
+{: RESULT = new LinkedList<String>(); :}
+                | parameter:p
+{:LinkedList<String> pl=new LinkedList<String>();pl.add(p);RESULT=pl; :}
+                | parameter:p COMMA parameter_list2:pl
+{: pl.push(p); RESULT=pl; :}
+;
+
+parameter_list2 ::= parameter:p
+{:LinkedList<String> pl=new LinkedList<String>();pl.add(p);RESULT=pl; :}
+                | parameter:p COMMA parameter_list2:pl
+{: pl.push(p); RESULT=pl; :}
+;
+
+parameter ::= IDENTIFIER:id                                    {: RESULT = id; :}
+;
+
+expr_list ::= top_expr:e expr_list:el                    {: el.push(e); RESULT=el; :}
+            | /*empty*/                          {: RESULT = new LinkedList<String>(); :}
+;
+
+top_expr ::= top_func_call:e                                    {: RESULT = e; :}
+      |  STRING_LITERAL:e                                       {: RESULT = '"'+e+'"'; :}
+      |  top_concat_op:e                                            {: RESULT = e; :}
+      |  top_if_expr:e                                              {: RESULT = e; :}
+      | LPAREN top_expr:e RPAREN                            {: RESULT = "("+e+")"; :}
+;
+
+expr ::= func_call:e                                            {: RESULT = e; :}
+      |  STRING_LITERAL:e                                       {: RESULT = '"'+e+'"'; :}
+      |  IDENTIFIER:e                                           {: RESULT = e; :}
+      |  concat_op:e                                            {: RESULT = e; :}
+      |  if_expr:e                                              {: RESULT = e; :}
+      | LPAREN expr:e RPAREN                            {: RESULT = "("+e+")"; :}
+;
+
+inner_expr ::= expr:e          {: String buffer="return "+e; RESULT = buffer; :}
+;
+
+top_func_call ::= IDENTIFIER:id LPAREN top_argument_list:al RPAREN
+{:
+  String buffer = id+'(';
+  //argument list
+  ListIterator<String> iterator = al.listIterator();
+  while(iterator.hasNext()){
+    if(iterator.hasPrevious())
+      buffer += ','+iterator.next();
+    else
+      buffer += iterator.next();
+  };
+  RESULT = buffer+')';
+:}
+;
+
+func_call ::= IDENTIFIER:id LPAREN argument_list:al RPAREN
+{:
+  String buffer = id+'(';
+  //argument list
+  ListIterator<String> iterator = al.listIterator();
+  while(iterator.hasNext()){
+    if(iterator.hasPrevious())
+      buffer += ','+iterator.next();
+    else
+      buffer += iterator.next();
+  };
+  RESULT = buffer+')';
+:}
+;
+
+top_argument_list ::= /*empty*/
+{: RESULT = new LinkedList<String>(); :}
+              | top_argument:a
+{: LinkedList<String> al=new LinkedList<String>(); al.add(a); RESULT=al; :}
+              | top_argument:a COMMA top_argument_list2:al
+{: al.push(a); RESULT=al; :}
+;
+
+top_argument_list2 ::= top_argument:a
+{: LinkedList<String> al=new LinkedList<String>(); al.add(a); RESULT=al; :}
+                | top_argument:a COMMA top_argument_list2:al
+{: al.push(a); RESULT=al; :}
+;
+
+top_argument ::= top_expr:e                                      {: RESULT = e; :}
+;
+
+argument_list ::= /*empty*/
+{: RESULT = new LinkedList<String>(); :}
+              | argument:a
+{: LinkedList<String> al=new LinkedList<String>(); al.add(a); RESULT=al; :}
+              | argument:a COMMA argument_list2:al
+{: al.push(a); RESULT=al; :}
+;
+
+argument_list2 ::= argument:a
+{: LinkedList<String> al=new LinkedList<String>(); al.add(a); RESULT=al; :}
+                | argument:a COMMA argument_list2:al
+{: al.push(a); RESULT=al; :}
+;
+
+argument ::= expr:e                                      {: RESULT = e; :}
+;
+
+concat_op ::= expr:e1 CONCAT expr:e2     {: RESULT = '('+e1+')'+'+'+'('+e2+')'; :}
+;
+
+top_concat_op ::= top_expr:e1 CONCAT top_expr:e2     {: RESULT = '('+e1+')'+'+'+'('+e2+')'; :}
+;
+
+if_expr ::= IF LPAREN condition:c RPAREN expr:e1 ELSE expr:e2
+{: RESULT= "(("+c+")?"+'('+e1+')'+':'+'('+e2+"))"; :}
+;
+
+top_if_expr ::= IF LPAREN top_condition:c RPAREN top_expr:e1 ELSE top_expr:e2
+{: RESULT= "(("+c+")?"+'('+e1+')'+':'+'('+e2+"))"; :}
+;
+
+condition ::= expr:e1 PREFIX expr:e2              {: RESULT = '('+e2+')'+".startsWith("+e1+")"; :}
+            | expr:e1 SUFFIX expr:e2              {: RESULT = '('+e2+')'+".endsWith("+e1+")"; :}
+;
+
+top_condition ::= top_expr:e1 PREFIX top_expr:e2  {: RESULT = '('+e2+')'+".startsWith("+e1+")"; :}
+            | top_expr:e1 SUFFIX top_expr:e2      {: RESULT = '('+e2+')'+".endsWith("+e1+")"; :}
+;

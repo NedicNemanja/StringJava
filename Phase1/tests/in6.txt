@@ -1,0 +1,9 @@
+eenum(x,num){
+  x+num
+}
+
+conscat(x,y){
+  eenum(x,"1")+y+if("y" suffix "yes")"incorrect"else x+"2"
+}
+
+conscat("hello "+"world","\n")
