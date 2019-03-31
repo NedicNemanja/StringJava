@@ -115,26 +115,26 @@ parameter_list2 ::= parameter:p
 {: pl.push(p); RESULT=pl; :}
 ;
 
-parameter ::= IDENTIFIER:id                                    {: RESULT = id; :}
+parameter ::= IDENTIFIER:id                                   {: RESULT = id; :}
 ;
 
-expr_list ::= top_expr:e expr_list:el                    {: el.push(e); RESULT=el; :}
-            | /*empty*/                          {: RESULT = new LinkedList<String>(); :}
+expr_list ::= top_expr:e expr_list:el               {: el.push(e); RESULT=el; :}
+            | /*empty*/                 {: RESULT = new LinkedList<String>(); :}
 ;
 
-top_expr ::= top_func_call:e                                    {: RESULT = e; :}
-      |  STRING_LITERAL:e                                       {: RESULT = '"'+e+'"'; :}
-      |  top_concat_op:e                                            {: RESULT = e; :}
-      |  top_if_expr:e                                              {: RESULT = e; :}
-      | LPAREN top_expr:e RPAREN                            {: RESULT = "("+e+")"; :}
+top_expr ::= top_func_call:e                                   {: RESULT = e; :}
+      |  STRING_LITERAL:e                              {: RESULT = '"'+e+'"'; :}
+      |  top_concat_op:e                                       {: RESULT = e; :}
+      |  top_if_expr:e                                         {: RESULT = e; :}
+      | LPAREN top_expr:e RPAREN                       {: RESULT = "("+e+")"; :}
 ;
 
-expr ::= func_call:e                                            {: RESULT = e; :}
-      |  STRING_LITERAL:e                                       {: RESULT = '"'+e+'"'; :}
-      |  IDENTIFIER:e                                           {: RESULT = e; :}
-      |  concat_op:e                                            {: RESULT = e; :}
-      |  if_expr:e                                              {: RESULT = e; :}
-      | LPAREN expr:e RPAREN                            {: RESULT = "("+e+")"; :}
+expr ::= func_call:e                                           {: RESULT = e; :}
+      |  STRING_LITERAL:e                              {: RESULT = '"'+e+'"'; :}
+      |  IDENTIFIER:e                                          {: RESULT = e; :}
+      |  concat_op:e                                           {: RESULT = e; :}
+      |  if_expr:e                                             {: RESULT = e; :}
+      | LPAREN expr:e RPAREN                           {: RESULT = "("+e+")"; :}
 ;
 
 inner_expr ::= expr:e          {: String buffer="return "+e; RESULT = buffer; :}
@@ -172,19 +172,19 @@ func_call ::= IDENTIFIER:id LPAREN argument_list:al RPAREN
 
 top_argument_list ::= /*empty*/
 {: RESULT = new LinkedList<String>(); :}
-              | top_argument:a
+                  | top_argument:a
 {: LinkedList<String> al=new LinkedList<String>(); al.add(a); RESULT=al; :}
-              | top_argument:a COMMA top_argument_list2:al
+                  | top_argument:a COMMA top_argument_list2:al
 {: al.push(a); RESULT=al; :}
 ;
 
 top_argument_list2 ::= top_argument:a
 {: LinkedList<String> al=new LinkedList<String>(); al.add(a); RESULT=al; :}
-                | top_argument:a COMMA top_argument_list2:al
+                  | top_argument:a COMMA top_argument_list2:al
 {: al.push(a); RESULT=al; :}
 ;
 
-top_argument ::= top_expr:e                                      {: RESULT = e; :}
+top_argument ::= top_expr:e                                    {: RESULT = e; :}
 ;
 
 argument_list ::= /*empty*/
@@ -201,13 +201,14 @@ argument_list2 ::= argument:a
 {: al.push(a); RESULT=al; :}
 ;
 
-argument ::= expr:e                                      {: RESULT = e; :}
+argument ::= expr:e                                            {: RESULT = e; :}
 ;
 
-concat_op ::= expr:e1 CONCAT expr:e2     {: RESULT = '('+e1+')'+'+'+'('+e2+')'; :}
+concat_op ::= expr:e1 CONCAT expr:e2   {: RESULT = '('+e1+')'+'+'+'('+e2+')'; :}
 ;
 
-top_concat_op ::= top_expr:e1 CONCAT top_expr:e2     {: RESULT = '('+e1+')'+'+'+'('+e2+')'; :}
+top_concat_op ::= top_expr:e1 CONCAT top_expr:e2
+{: RESULT = '('+e1+')'+'+'+'('+e2+')'; :}
 ;
 
 if_expr ::= IF LPAREN condition:c RPAREN expr:e1 ELSE expr:e2
@@ -218,10 +219,14 @@ top_if_expr ::= IF LPAREN top_condition:c RPAREN top_expr:e1 ELSE top_expr:e2
 {: RESULT= "(("+c+")?"+'('+e1+')'+':'+'('+e2+"))"; :}
 ;
 
-condition ::= expr:e1 PREFIX expr:e2              {: RESULT = '('+e2+')'+".startsWith("+e1+")"; :}
-            | expr:e1 SUFFIX expr:e2              {: RESULT = '('+e2+')'+".endsWith("+e1+")"; :}
+condition ::= expr:e1 PREFIX expr:e2
+{: RESULT = '('+e2+')'+".startsWith("+e1+")"; :}
+            | expr:e1 SUFFIX expr:e2
+{: RESULT = '('+e2+')'+".endsWith("+e1+")"; :}
 ;
 
-top_condition ::= top_expr:e1 PREFIX top_expr:e2  {: RESULT = '('+e2+')'+".startsWith("+e1+")"; :}
-            | top_expr:e1 SUFFIX top_expr:e2      {: RESULT = '('+e2+')'+".endsWith("+e1+")"; :}
+top_condition ::= top_expr:e1 PREFIX top_expr:e2
+{: RESULT = '('+e2+')'+".startsWith("+e1+")"; :}
+            | top_expr:e1 SUFFIX top_expr:e2
+{: RESULT = '('+e2+')'+".endsWith("+e1+")"; :}
 ;

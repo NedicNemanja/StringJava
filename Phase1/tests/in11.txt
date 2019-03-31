@@ -1,0 +1,34 @@
+mem(pp) {
+    pp
+}
+name () {
+    "CocaCola"
+}
+
+name2 (){
+    name()
+}
+cond(s1,s2) {
+    (
+    if (s1 prefix "Light Zero Sugar")
+      s1 + "--" + name() + "--[OK]\t"
+    else
+      s1 + "---" + name2() + "---[NOT LIGHT OK]\t"
+    )
+    +
+    (
+    if (s1 suffix "Light Sugar Zero")
+      s1 + "--" + name() + "---[OK]\t"
+    else
+      s1 + "---" + name() + "---[NOT ZERO OK]\t"
+    )
+    +
+    ("NO RED---" + (if (mem("Light") suffix "t" + s1) " {L---- ^>* ----L}" else " {Z---- ^>^  ----Z} "))
+}
+mem("Light")
+cond(mem("Light"),name())
+mem("")
+mem("")
+mem("")
+mem("Zero")
+cond(mem("Zero"),name())
