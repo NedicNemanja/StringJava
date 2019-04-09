@@ -1,0 +1,5 @@
+func(x,y){
+  x+y
+}
+
+func(if("a" prefix "abc")"works"else"doesn't work",if ("y" prefix "yes") if ("abc" prefix "abc")" :)"else" :("else"nothing")
