@@ -1,15 +1,13 @@
 # StringJava
-A parser and translator for a language supporting string operations.
 
-<h2 id="part-2">Part 2</h2>
-<p>In the second part of this homework you will implement a parser and translator for a language supporting string operations. The language supports the concatenation operator over strings, function definitions and calls, conditionals (if-else i.e, every "if" must be followed by an "else"), and the following logical expressions:</p>
+<p>A parser and translator for a language supporting string operations.. The language supports the concatenation operator over strings, function definitions and calls, conditionals (if-else i.e, every "if" must be followed by an "else"), and the following logical expressions:</p>
 <ul>
 <li>is-prefix-of (string1 prefix string2): Whether string1 is a prefix of string2.</li>
 <li>is-suffix-of (string1 suffix string2): Whether string1 is a suffix of string2.</li>
 </ul>
-<p>All values in the language are strings.</p>
-<p>Your parser, based on a context-free grammar, will translate the input language into Java. You will use JavaCUP for the generation of the parser combined either with a hand-written lexer or a generated-one (e.g., using JFlex, which is encouraged).</p>
-<p>You will infer the desired syntax of the input and output languages from the examples below. The output language is a subset of Java so it can be compiled using the "javac" command and executed using the "java" command or online Java compilers like <a href="http://repl.it/languages/java">this</a>, if you want to test your output.</p>
+<p>All values in the language are string .</p>
+<p>The parser, based on a context-free grammar, will translate the input language into Java. With the will use JavaCUP for the generation of the parser combined with JFlex lexer.</p>
+<p>Infr the desired syntax of the input and output languages from the examples below. The output language is a subset of Java so it can be compiled using the "javac" command and executed using the "java" command or online Java compilers like <a href="http://repl.it/languages/java">this</a>, if you want to test your output.</p>
 <p>There is no need to perform type checking for the argument types or a check for the number of function arguments. You can assume that the program input will always be semantically correct.</p>
 <p>Note that each file of Java source code you produce must have the same name as the public Java class in it. For your own convenience you can name the public class &quot;Main&quot; and the generated files &quot;Main.java&quot;. In order to compile a file named Main.java you need to execute the command: javac Main.java. In order to execute the produced Main.class file you need to execute: java Main.</p>
 <p>To execute the program successfully, the &quot;Main&quot; class of your Java program must have a method with the following signature: public static void main(String[] args), which will be the main method of your program, containing all the translated statements of the input program. Moreover, for each function declaration of the input program, the translated Java program must contain an equivalent static method of the same name. Finaly, keep in mind that in the input language the function declations must precede all statements.</p>
