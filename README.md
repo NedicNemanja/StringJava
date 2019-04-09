@@ -1,16 +1,15 @@
 # StringJava
 
-<p>A parser and translator for a language supporting string operations.. The language supports the concatenation operator over strings, function definitions and calls, conditionals (if-else i.e, every "if" must be followed by an "else"), and the following logical expressions:</p>
+<p>A parser and translator for a language supporting string operations. The language supports the concatenation operator over strings, function definitions and calls, conditionals (if-else i.e, every "if" must be followed by an "else"), and the following logical expressions:</p>
 <ul>
 <li>is-prefix-of (string1 prefix string2): Whether string1 is a prefix of string2.</li>
 <li>is-suffix-of (string1 suffix string2): Whether string1 is a suffix of string2.</li>
 </ul>
-<p>All values in the language are string .</p>
+<p>All values in the language are strings.</p>
 <p>The parser, based on a context-free grammar, will translate the input language into Java. With the will use JavaCUP for the generation of the parser combined with JFlex lexer.</p>
-<p>Infr the desired syntax of the input and output languages from the examples below. The output language is a subset of Java so it can be compiled using the "javac" command and executed using the "java" command or online Java compilers like <a href="http://repl.it/languages/java">this</a>, if you want to test your output.</p>
-<p>There is no need to perform type checking for the argument types or a check for the number of function arguments. You can assume that the program input will always be semantically correct.</p>
-<p>Note that each file of Java source code you produce must have the same name as the public Java class in it. For your own convenience you can name the public class &quot;Main&quot; and the generated files &quot;Main.java&quot;. In order to compile a file named Main.java you need to execute the command: javac Main.java. In order to execute the produced Main.class file you need to execute: java Main.</p>
-<p>To execute the program successfully, the &quot;Main&quot; class of your Java program must have a method with the following signature: public static void main(String[] args), which will be the main method of your program, containing all the translated statements of the input program. Moreover, for each function declaration of the input program, the translated Java program must contain an equivalent static method of the same name. Finaly, keep in mind that in the input language the function declations must precede all statements.</p>
+<p>Infer the desired syntax of the input and output languages from the examples below or with the grammar in the parser.cup file. The output language is a subset of Java so it can be compiled using the "javac" command and executed using the "java" command or online Java compilers like <a href="http://repl.it/languages/java">this</a>, if you want to test your output.</p>
+<p>There is no type checking for the argument types or a check for the number of function arguments. We assume that the program input will always be semantically correct.</p>
+<p> Moreover, for each function declaration of the input program, the translated Java program must contain an equivalent static method of the same name. Finaly, keep in mind that in the input language the function declations must precede all statements.</p>
 <h3 id="example-1">Example #1</h3>
 <p><strong>Input:</strong></p>
 
@@ -104,53 +103,3 @@
     findLangType<span style="color:#808030; ">(</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">Javascript</span><span style="color:#800000; ">"</span><span style="color:#808030; ">)</span>
     findLangType<span style="color:#808030; ">(</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">Typescript</span><span style="color:#800000; ">"</span><span style="color:#808030; ">)</span>
 </pre>
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
-  <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-  <link rel="stylesheet" href="style.css" type="text/css" />
-</head>
-<body>
