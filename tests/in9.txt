@@ -1,0 +1,27 @@
+test(a, b, c) {
+        if (a prefix "yz")
+                "yes"
+        else
+                "no"
+                +
+                if (b prefix "yz")
+                        "+yes2"
+                else
+                        "+no2"
+                        +
+                        if (c prefix "yz")
+                                "+yes3"
+                        else
+                                "+no3"
+                                +
+                                "WOW"
+}
+
+test("y", "y", "y")
+test("y", "y", "a")
+test("y", "a", "y")
+test("y", "a", "a")
+test("a", "y", "y")
+test("a", "y", "a")
+test("a", "a", "y")
+test("a", "a", "a")
