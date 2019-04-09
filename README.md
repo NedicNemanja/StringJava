@@ -17,15 +17,12 @@
 <pre style="color:#000000;background:#ffffff;">    name<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span>  <span style="color:#800080; ">{</span>
         <span style="color:#800000; ">"</span><span style="color:#0000e6; ">John</span><span style="color:#800000; ">"</span>
     <span style="color:#800080; ">}</span>
-    
     surname<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span> <span style="color:#800080; ">{</span>
         <span style="color:#800000; ">"</span><span style="color:#0000e6; ">Doe</span><span style="color:#800000; ">"</span>
     <span style="color:#800080; ">}</span>
-    
     fullname<span style="color:#808030; ">(</span>first_name<span style="color:#808030; ">,</span> sep<span style="color:#808030; ">,</span> last_name<span style="color:#808030; ">)</span> <span style="color:#800080; ">{</span>
         first_name <span style="color:#808030; ">+</span> sep <span style="color:#808030; ">+</span> last_name
     <span style="color:#800080; ">}</span>
-
     name<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span>
     surname<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span>
     fullname<span style="color:#808030; ">(</span>name<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span><span style="color:#808030; ">,</span> <span style="color:#800000; ">"</span><span style="color:#0000e6; "> </span><span style="color:#800000; ">"</span><span style="color:#808030; ">,</span> surname<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span><span style="color:#808030; ">)</span>
