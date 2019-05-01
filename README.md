@@ -6,7 +6,7 @@
 <li>is-suffix-of (string1 suffix string2): Whether string1 is a suffix of string2.</li>
 </ul>
 <p>All values in the language are strings.</p>
-<p>The parser, based on a context-free grammar, will translate the input language into Java. With the will use JavaCUP for the generation of the parser combined with JFlex lexer.</p>
+<p>The parser, based on a context-free grammar, will translate the input language into Java. JavaCUP was used for generating the parser, combined with JFlex lexer.</p>
 <p>Infer the desired syntax of the input and output languages from the examples below or with the grammar in the parser.cup file. The output language is a subset of Java so it can be compiled using the "javac" command and executed using the "java" command or online Java compilers like <a href="http://repl.it/languages/java">this</a>, if you want to test your output.</p>
 <p>There is no type checking for the argument types or a check for the number of function arguments. We assume that the program input will always be semantically correct.</p>
 <p> Moreover, for each function declaration of the input program, the translated Java program must contain an equivalent static method of the same name. Finaly, keep in mind that in the input language the function declations must precede all statements.</p>
